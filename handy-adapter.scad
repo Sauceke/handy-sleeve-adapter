@@ -1,4 +1,4 @@
-module handy_adapter() {
+module handy_adapter(into_silicone = false) {
     
     adapter_h = 47.5;
     adapter_l = 13;
@@ -33,5 +33,17 @@ module handy_adapter() {
                     linear_extrude(small_circle_d / 2 + 2.2)
                         square([adapter_h, 3], center = true);
         lower_halfspace();
+    }
+    if (into_silicone) {
+        linear_extrude(1)
+            square([adapter_h, 60], center = true);
+        
+        for (i = [-1, 0, 1])
+            translate([0, -18 * i, 0])
+                resize([adapter_h, 7, 15])
+                    rotate([90, 0, 0])
+                        rotate_extrude(angle = -180)
+                            translate([3, 0, 0])
+                                circle(d = 1);
     }
 }

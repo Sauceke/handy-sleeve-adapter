@@ -18,7 +18,7 @@ jobs:
         run: sudo apt-get install openscad
         
       - name: Build STL
-        run: openscad -o handy-adapter.stl -D '$fn = 50;handy_adapter();' handy-adapter.scad
+        run: openscad -o handy-adapter.stl -D '$fn = 100; rotate([0, 90, 0]) handy_adapter(into_silicone = true);' handy-adapter.scad
           
       - name: Create Release
         id: create_release
