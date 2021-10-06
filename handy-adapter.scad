@@ -38,9 +38,9 @@ module handy_adapter(into_silicone = false) {
         linear_extrude(1)
             square([adapter_h, 60], center = true);
         
-        for (i = [-1, 0, 1])
-            translate([0, -18 * i, 0])
-                resize([adapter_h, 7, 15])
+        for (i = [-1, 1])
+            translate([0, 9 * i, 0])
+                resize([adapter_h, 7, 18])
                     rotate([90, 0, 0])
                         rotate_extrude(angle = -180)
                             translate([3, 0, 0])

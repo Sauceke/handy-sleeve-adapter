@@ -17,7 +17,10 @@ jobs:
       - name: Install OpenSCAD
         run: sudo apt-get install openscad
         
-      - name: Build STL
+      - name: Build STL without cuffs
+        run: openscad -o handy-adapter-nocuff.stl -D '$fn = 100; rotate([0, 90, 0]) handy_adapter();' handy-adapter.scad
+      
+      - name: Build STL with cuffs
         run: openscad -o handy-adapter.stl -D '$fn = 100; rotate([0, 90, 0]) handy_adapter(into_silicone = true);' handy-adapter.scad
           
       - name: Create Release
@@ -32,6 +35,26 @@ jobs:
           prerelease: false
 
       - name: Upload STL
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: handy-adapter.stl
+          asset_name: handy-adapter.stl
+          asset_content_type: model/stl
+
+      - name: Upload STL without cuffs
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: handy-adapter-nocuff.stl
+          asset_name: handy-adapter-nocuff.stl
+          asset_content_type: model/stl
+
+      - name: Upload STL with cuffs
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
